@@ -26,7 +26,8 @@ body {
 }
 
 .todos {
-    background-color: #F6F6F2;
+    background-image: url("./images/tyler-franta-adysOI7jBhc-unsplash.jpg");
+    background-size: cover;
 }
 
 #logo {
@@ -95,6 +96,25 @@ ul {
   #todo-list {
       cursor: pointer;
   }
+
+  @media only screen and (max-width: 720px) {
+      .container{
+        grid-template-columns: 120px auto;
+      }
+      .sidebar{
+          width: 120px;
+      }
+  }
+  
+  @media only screen and (max-width: 375px) {
+    #tagline {
+        display: none;
+    }
+
+    #logo-bullet {
+        display: none;
+    }
+}
 
 
 /**************************\

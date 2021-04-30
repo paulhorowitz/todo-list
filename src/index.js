@@ -1,4 +1,3 @@
-import flatpickr from "flatpickr";
 import MicroModal from 'micromodal';  // es6 module
 
 class Project {
@@ -52,12 +51,32 @@ let taskIdIndex = 0;
 
 // create default project
 
-let defaultProject1 = new Project("Personal", 1);
-projects.push(defaultProject1);
-let defaultProject2 = new Project("Work", 2);
-projects.push(defaultProject2);
+if (localStorage.getItem("projects") === null) {
+    let defaultProject1 = new Project("Personal", 1);
+    projects.push(defaultProject1);
+    let defaultProject2 = new Project("Work", 2);
+    projects.push(defaultProject2);
+    localStorage.setItem("projects", JSON.stringify(projects));
+    console.log("ME")
+}
+
+else {
+    // for each object in the array
+    // create a project object
+    // push data to object
+    // push object to array
+
+    let localProjects = localStorage.getItem("projects");
+    localProjects = JSON.parse(localProjects)
+
+    for (let i = 0; i < localProjects.length; i++){
+        let newProject = new Project(localProjects[i].name, localProjects[i].id, localProjects[i].tasks);
+        projects.push(newProject)
+    }
+}
+
 updateDomWithProjectList()
-displayCurrentProjectTasks(defaultProject1)
+displayCurrentProjectTasks(projects[0])
 
 function addProject() {
 
@@ -100,6 +119,7 @@ function addProjectToList(newProjectName) {
     let newProject = new Project(projectName, projectIdIndex);
     projectIdIndex += 1;
     projects.push(newProject)
+    localStorage.setItem("projects", JSON.stringify(projects));
     updateDomWithProjectList()
     displayCurrentProjectTasks(newProject);
 }
@@ -167,6 +187,7 @@ function renderAddTaskButton(currentProject) {
         addTaskConfirmEl.addEventListener("click", function() {
             let newTaskName = addTaskinputEl.value
             addTaskToProject(newTaskName, currentProject)
+            console.log(projects)
             displayCurrentProjectTasks(currentProject)
         })
     })
@@ -214,6 +235,6 @@ function renderTaskModal(currentTask) {
 function saveModal(currentTask, comments, dueDate) {
     currentTask.comments = comments;
     currentTask.dueDate = dueDate;
-    console.log(currentTask)
+    console.log(localStorage)
     currentTask.dueDate = dueDate;
 }
