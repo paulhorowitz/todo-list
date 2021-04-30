@@ -5,5 +5,3 @@
 - Functionality for both Projects and Tasks.
 - Modal with due date and comments.
 - Utilising local storage
-
-* * A Pauly Designed Project | 2021
