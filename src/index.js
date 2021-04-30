@@ -1,10 +1,10 @@
 import MicroModal from 'micromodal';  // es6 module
 
 class Project {
-    constructor(name, id, tasks) {
+    constructor(name, id, tasks = []) {
         this.name = name;
         this.id = id;
-        this.tasks = [];
+        this.tasks = tasks;
     }
 
     addTask(taskObject) {
@@ -57,18 +57,11 @@ if (localStorage.getItem("projects") === null) {
     let defaultProject2 = new Project("Work", 2);
     projects.push(defaultProject2);
     localStorage.setItem("projects", JSON.stringify(projects));
-    console.log("ME")
 }
 
 else {
-    // for each object in the array
-    // create a project object
-    // push data to object
-    // push object to array
-
     let localProjects = localStorage.getItem("projects");
     localProjects = JSON.parse(localProjects)
-
     for (let i = 0; i < localProjects.length; i++){
         let newProject = new Project(localProjects[i].name, localProjects[i].id, localProjects[i].tasks);
         projects.push(newProject)
@@ -148,11 +141,11 @@ function displayCurrentProjectTasks(currentProject) {
 
     if (currentProject.tasks){
         for (let i = 0; i < currentProject.tasks.length; i++) {
-            let todoItemEl = document.createElement("li");
-            todoItemEl.id="todo-list"
-            projectViewEl.appendChild(todoItemEl);
-            todoItemEl.innerHTML = currentProject.tasks[i].name;
-            todoItemEl.addEventListener("click", function() {
+            let todoListEl = document.createElement("li");
+            todoListEl.id="todo-list";
+            projectViewEl.appendChild(todoListEl);
+            todoListEl.innerHTML = currentProject.tasks[i].name;
+            todoListEl.addEventListener("click", function() {
                 renderTaskModal(currentProject.tasks[i])
             })
         }
@@ -187,7 +180,6 @@ function renderAddTaskButton(currentProject) {
         addTaskConfirmEl.addEventListener("click", function() {
             let newTaskName = addTaskinputEl.value
             addTaskToProject(newTaskName, currentProject)
-            console.log(projects)
             displayCurrentProjectTasks(currentProject)
         })
     })
@@ -198,6 +190,7 @@ function addTaskToProject(newTaskName, currentProject) {
     let newTask = new Task(newTaskName, taskIdIndex);
     taskIdIndex += 1;
     currentProject.addTask(newTask)
+    localStorage.setItem("projects", JSON.stringify(projects));
 }
 
 function renderTaskModal(currentTask) {
@@ -235,6 +228,5 @@ function renderTaskModal(currentTask) {
 function saveModal(currentTask, comments, dueDate) {
     currentTask.comments = comments;
     currentTask.dueDate = dueDate;
-    console.log(localStorage)
     currentTask.dueDate = dueDate;
 }
