@@ -6,4 +6,4 @@
 - Modal with due date and comments.
 - Utilising local storage
 
-__ A Pauly Designed Project | 2021
+__A Pauly Designed Project | 2021
